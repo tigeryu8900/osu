@@ -38,10 +38,10 @@ jobs:
           CODE_SIGNING_CERTIFICATE: ${{ secrets.CODE_SIGNING_CERTIFICATE }}
         run: |
           echo "$CODE_SIGNING_CERTIFICATE" | base64 -d -o certificate.cer
-          security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain certificate.cer
+          security add-trusted-cert -d -r trustRoot -k ~/Library/Keychains/login.keychain-db certificate.cer
 
       - name: Build
-        run: dotnet build -c Release -r ios-arm64 osu.iOS
+        run: dotnet build -c Release -r ios-arm64 /p:CodesignKey="Apple Development: Tiger Yu" /p:BuildIpa=true osu.iOS
 
       - name: Create .ipa File
         run: |
