@@ -1,0 +1,49 @@
+on: [workflow_dispatch]
+name: Create .ipa File
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read # to fetch code (actions/checkout)
+
+jobs:
+  create-ipa:
+    name: Create .ipa File
+    # change to macos-latest once GitHub finishes migrating all repositories to macOS 12.
+    runs-on: macos-12
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # see https://github.com/actions/runner-images/issues/6771#issuecomment-1354713617
+      # remove once all workflow VMs use Xcode 14.1
+      - name: Set Xcode Version
+        shell: bash
+        run: |
+          sudo xcode-select -s "/Applications/Xcode_14.1.app"
+          echo "MD_APPLE_SDK_ROOT=/Applications/Xcode_14.1.app" >> $GITHUB_ENV
+
+      - name: Install .NET 6.0.x
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "6.0.x"
+
+      - name: Install .NET Workloads
+        run: dotnet workload install maui-ios
+
+      - name: Build
+        run: dotnet build -c Release osu.iOS
+
+      - name: Create .ipa File
+        run: |
+          mkdir Payload
+          mv $GITHUB_WORKSPACE/osu.iOS/bin/Release/net6.0-ios/iossimulator-x64/osu.iOS.app Payload/
+          zip -r osu.ipa Payload
+
+      - name: Upload .ipa File
+        uses: actions/upload-artifact@v2
+        with:
+          name: osu
+          path: osu.ipa
