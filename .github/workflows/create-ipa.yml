@@ -34,12 +34,12 @@ jobs:
         run: dotnet workload install maui-ios
 
       - name: Build
-        run: dotnet build -c Release osu.iOS
+        run: dotnet build -c Release -r ios-arm64 osu.iOS
 
       - name: Create .ipa File
         run: |
           mkdir Payload
-          mv $GITHUB_WORKSPACE/osu.iOS/bin/Release/net6.0-ios/iossimulator-x64/osu.iOS.app Payload/
+          mv $GITHUB_WORKSPACE/osu.iOS/bin/Release/net6.0-ios/ios-arm64/osu.iOS.app Payload/
           zip -r osu.ipa Payload
 
       - name: Upload .ipa File
