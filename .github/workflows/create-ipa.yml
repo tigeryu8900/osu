@@ -41,7 +41,7 @@ jobs:
           security add-trusted-cert -d -r trustRoot -k ~/Library/Keychains/login.keychain-db certificate.cer
 
       - name: Build
-        run: dotnet build -c Release -r ios-arm64 /p:CodesignKey="Apple Development: Tiger Yu" /p:BuildIpa=true osu.iOS
+        run: 'dotnet build -c Release -r ios-arm64 /p:CodesignKey="Apple Development: Tiger Yu" /p:BuildIpa=true osu.iOS'
 
       - name: Create .ipa File
         run: |
