@@ -33,6 +33,13 @@ jobs:
       - name: Install .NET Workloads
         run: dotnet workload install maui-ios
 
+      - name: Install Code Signing Certificate
+        env:
+          CODE_SIGNING_CERTIFICATE: ${{ secrets.CODE_SIGNING_CERTIFICATE }}
+        run: |
+          echo "$CODE_SIGNING_CERTIFICATE" | base64 -d -o certificate.cer
+          sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain certificate.cer
+
       - name: Build
         run: dotnet build -c Release -r ios-arm64 osu.iOS
 
