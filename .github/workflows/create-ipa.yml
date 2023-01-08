@@ -33,12 +33,17 @@ jobs:
       - name: Install .NET Workloads
         run: dotnet workload install maui-ios
 
-      - name: Install Code Signing Certificate
+      - name: Install Provisioning Profile
         env:
-          CODE_SIGNING_CERTIFICATE: ${{ secrets.CODE_SIGNING_CERTIFICATE }}
-        run: |
-          echo "$CODE_SIGNING_CERTIFICATE" | base64 -d -o certificate.cer
-          security add-trusted-cert -d -r trustRoot -k ~/Library/Keychains/login.keychain-db certificate.cer
+          PROVISIONING_PROFILE: ${{ secrets.PROVISIONING_PROFILE }}
+        run: 'echo "$PROVISIONING_PROFILE" | base64 -d -o "~/Library/MobileDevice/Provisioning Profiles/c37183a4-d13b-4166-a12b-320bafc49b13.mobileprovision"'
+
+#       - name: Install Code Signing Certificate
+#         env:
+#           CODE_SIGNING_CERTIFICATE: ${{ secrets.CODE_SIGNING_CERTIFICATE }}
+#         run: |
+#           echo "$CODE_SIGNING_CERTIFICATE" | base64 -d -o certificate.cer
+#           security add-trusted-cert -d -r trustRoot -k ~/Library/Keychains/login.keychain-db certificate.cer
 
       - name: Build
         run: 'dotnet build -c Release -r ios-arm64 /p:CodesignKey="Apple Development: Tiger Yu" /p:BuildIpa=true osu.iOS'
