@@ -5,6 +5,12 @@
     <OutputType>Exe</OutputType>
     <UseMauiEssentials>true</UseMauiEssentials>
   </PropertyGroup>
+  <!-- Workaround for https://github.com/dotnet/maui/issues/7272 -->
+  <Target Name="_SetPublishFolderTypeNoneOnDocFileItems" BeforeTargets="_ComputePublishLocation">
+    <ItemGroup>
+      <ResolvedFileToPublish Update="@(DocFileItem)" PublishFolderType="None" />
+    </ItemGroup>
+  </Target>
   <Import Project="..\osu.iOS.props" />
   <ItemGroup>
     <ProjectReference Include="..\osu.Game\osu.Game.csproj" />
@@ -13,10 +19,4 @@
     <ProjectReference Include="..\osu.Game.Rulesets.Osu\osu.Game.Rulesets.Osu.csproj" />
     <ProjectReference Include="..\osu.Game.Rulesets.Taiko\osu.Game.Rulesets.Taiko.csproj" />
   </ItemGroup>
-  <!-- Workaround for https://github.com/dotnet/maui/issues/7272 -->
-  <Target Name="_SetPublishFolderTypeNoneOnDocFileItems" BeforeTargets="_ComputePublishLocation">
-    <ItemGroup>
-      <ResolvedFileToPublish Update="@(DocFileItem)" PublishFolderType="None" />
-    </ItemGroup>
-  </Target>
 </Project>
