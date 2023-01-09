@@ -65,15 +65,8 @@ jobs:
       - name: Build
         run: 'dotnet build -c Release -r ios-arm64 /p:BuildIpa=true osu.iOS'
 
-      - name: Create .ipa File
-        run: |
-          find $GITHUB_WORKSPACE -type f -name "*.ipa"
-          mkdir Payload
-          mv $GITHUB_WORKSPACE/osu.iOS/bin/iPhone/Release/net6.0-ios/ios-arm64/osu.iOS.app Payload/
-          zip -r osu.ipa Payload
-
       - name: Upload .ipa File
         uses: actions/upload-artifact@v2
         with:
-          name: osu
-          path: osu.ipa
+          name: osu.iOS.ipa
+          path: osu.iOS/bin/Release/net6.0-ios/ios-arm64/osu.iOS.ipa
