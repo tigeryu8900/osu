@@ -144,8 +144,8 @@ jobs:
       - name: Install .NET Workloads
         run: dotnet workload install maui-ios
 
-      - name: Find Xamarin.iOS*CSharp.targets
-        run: find / -type f -name "Xamarin.iOS*CSharp.targets" 2>/dev/null
+      - name: Find Xamarin.iOS.CSharp.targets
+        run: find / -type f -name "Xamarin.iOS.CSharp.targets" 2>/dev/null
 
       - name: Build
         run: dotnet build -c Debug osu.iOS
