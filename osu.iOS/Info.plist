@@ -38,9 +38,9 @@
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>We don&apos;t really use the camera.</string>
+	<string>We don't really use the camera.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>We don&apos;t really use the microphone.</string>
+	<string>We don't really use the microphone.</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationLandscapeRight</string>
@@ -134,5 +134,22 @@
 			<string>Editor</string>
 		</dict>
 	</array>
+	<key>NSExtensionFileProviderDocumentGroup</key>
+	<string>group.sh.ppy.osulazer</string>
+	<key>com.apple.security.application-groups</key>
+	<array>
+		<string>group.com.company.groupname</string>
+	</array>
+	<key>APFiles</key>
+	<dict>
+		<key>APFileDescriptionKey</key>
+		<string></string>
+		<key>APFileDestinationPath</key>
+		<string></string>
+		<key>APFileName</key>
+		<string></string>
+		<key>APFileSourcePath</key>
+		<string></string>
+	</dict>
 </dict>
 </plist>

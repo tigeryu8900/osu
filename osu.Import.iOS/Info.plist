@@ -48,5 +48,11 @@
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.share-services</string>
 	</dict>
+	<key>NSExtensionFileProviderDocumentGroup</key>
+	<string>group.sh.ppy.osulazer</string>
+	<key>com.apple.security.application-groups</key>
+	<array>
+		<string>group.com.company.groupname</string>
+	</array>
 </dict>
 </plist>
