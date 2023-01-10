@@ -14,8 +14,8 @@
     <ProjectReference Include="..\osu.Game.Rulesets.Taiko\osu.Game.Rulesets.Taiko.csproj" />
     <ProjectReference Include="..\osu.import.iOS\osu.import.iOS.csproj">
       <IsAppExtension>true</IsAppExtension>
-      <Project>{EB211D31-0424-414A-8347-CA16B2E0527A}</Project>
-      <Name>ShareExtension</Name>
+      <Project>{F9161774-0535-4EF4-969D-53AC08DF3C20}</Project>
+      <Name>osu.Import.iOS</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>
