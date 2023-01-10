@@ -12,5 +12,10 @@
     <ProjectReference Include="..\osu.Game.Rulesets.Mania\osu.Game.Rulesets.Mania.csproj" />
     <ProjectReference Include="..\osu.Game.Rulesets.Osu\osu.Game.Rulesets.Osu.csproj" />
     <ProjectReference Include="..\osu.Game.Rulesets.Taiko\osu.Game.Rulesets.Taiko.csproj" />
+    <ProjectReference Include="..\osu.import.iOS\osu.import.iOS.csproj">
+      <IsAppExtension>true</IsAppExtension>
+      <Project>{EB211D31-0424-414A-8347-CA16B2E0527A}</Project>
+      <Name>ShareExtension</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
