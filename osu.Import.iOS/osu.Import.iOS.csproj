@@ -86,6 +86,6 @@
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.AppExtension.CSharp.targets" />
+  <Import Project="\Library\Frameworks\Xamarin.iOS.framework\Versions\Current\lib\msbuild\iOS\Xamarin.iOS.AppExtension.CSharp.targets" />
   <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>
