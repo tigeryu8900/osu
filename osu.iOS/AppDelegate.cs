@@ -16,20 +16,13 @@ namespace osu.iOS
     [Register("AppDelegate")]
     public class AppDelegate : GameAppDelegate
     {
-        //protected NSUserDefaults plist = new NSUserDefaults ("sh.ppy.sharing", NSUserDefaultsType.SuiteName);
-        protected NSUserDefaults plist = NSUserDefaults.StandardUserDefaults;
-
-        //protected NSPersistentContainer nsPersistentContainer = new NSPersistentContainer("sh.ppy.sharing");
+        private NSUserDefaults nsUserDefaults = NSUserDefaults.StandardUserDefaults;
 
         private OsuGameIOS game;
 
         public AppDelegate()
         {
-            //NSNotificationCenter.DefaultCenter.AddObserver(NSNotification.FromName(NSUserDefaults.DidChangeNotification, plist.), (NSNotification nsNotification) =>
-            //{
-            //    nsNotification.
-            //});
-            plist.AddObserver("imports", NSKeyValueObservingOptions.New, change =>
+            nsUserDefaults.AddObserver("imports", NSKeyValueObservingOptions.New, change =>
             {
                 List<String> urls = JsonSerializer.Deserialize<List<String>>((NSString)change.NewValue);
 
@@ -42,7 +35,6 @@ namespace osu.iOS
                         Task.Run(() => game?.HandleLink(url.AbsoluteString));
                 }
             });
-            //plist.SetBool(true, "NSPersistentStoreRemoteChangeNotificationOptionKey");
         }
 
         protected override Framework.Game CreateGame() => game = new OsuGameIOS();

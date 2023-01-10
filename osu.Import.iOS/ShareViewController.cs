@@ -13,9 +13,7 @@ namespace osu.Import.iOS
         {
         }
 
-        //protected NSUserDefaults plist = new NSUserDefaults ("sh.ppy.sharing", NSUserDefaultsType.SuiteName);
-
-        protected NSUserDefaults plist = NSUserDefaults.StandardUserDefaults;
+        private NSUserDefaults nsUserDefaults = NSUserDefaults.StandardUserDefaults;
 
         protected ShareViewController (IntPtr handle) : base (handle)
         {
@@ -62,7 +60,7 @@ namespace osu.Import.iOS
                     }
                 }
 
-                plist.SetString(JsonSerializer.Serialize(urls), "imports");
+                nsUserDefaults.SetString(JsonSerializer.Serialize(urls), "imports");
             });
 
             // Do any additional setup after loading the view.
