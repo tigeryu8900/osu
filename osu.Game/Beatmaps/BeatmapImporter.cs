@@ -12,7 +12,6 @@ using osu.Framework.Extensions;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Logging;
 using osu.Framework.Platform;
-using osu.Framework.Testing;
 using osu.Game.Beatmaps.Formats;
 using osu.Game.Collections;
 using osu.Game.Database;
@@ -21,6 +20,7 @@ using osu.Game.IO;
 using osu.Game.IO.Archives;
 using osu.Game.Overlays.Notifications;
 using osu.Game.Rulesets;
+using osu.Game.Scoring;
 using Realms;
 
 namespace osu.Game.Beatmaps
@@ -28,7 +28,6 @@ namespace osu.Game.Beatmaps
     /// <summary>
     /// Handles the storage and retrieval of Beatmaps/WorkingBeatmaps.
     /// </summary>
-    [ExcludeFromDynamicCompile]
     public class BeatmapImporter : RealmArchiveModelImporter<BeatmapSetInfo>
     {
         public override IEnumerable<string> HandledExtensions => new[] { ".osz" };
@@ -206,6 +205,15 @@ namespace osu.Game.Beatmaps
         protected override void PostImport(BeatmapSetInfo model, Realm realm, ImportParameters parameters)
         {
             base.PostImport(model, realm, parameters);
+
+            // Scores are stored separately from beatmaps, and persist even when a beatmap is modified or deleted.
+            // Let's reattach any matching scores that exist in the database, based on hash.
+            foreach (BeatmapInfo beatmap in model.Beatmaps)
+            {
+                foreach (var score in realm.All<ScoreInfo>().Where(score => score.BeatmapHash == beatmap.Hash))
+                    score.BeatmapInfo = beatmap;
+            }
+
             ProcessBeatmap?.Invoke(model, parameters.Batch ? MetadataLookupScope.LocalCacheFirst : MetadataLookupScope.OnlineFirst);
         }
 

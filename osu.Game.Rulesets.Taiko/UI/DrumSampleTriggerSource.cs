@@ -17,12 +17,25 @@ namespace osu.Game.Rulesets.Taiko.UI
 
         public void Play(HitType hitType)
         {
-            var hitObject = GetMostValidObject();
+            TaikoHitObject? hitObject = GetMostValidObject() as TaikoHitObject;
 
             if (hitObject == null)
                 return;
 
-            PlaySamples(new ISampleInfo[] { hitObject.SampleControlPoint.GetSampleInfo(hitType == HitType.Rim ? HitSampleInfo.HIT_CLAP : HitSampleInfo.HIT_NORMAL) });
+            var baseSample = hitObject.CreateHitSampleInfo(hitType == HitType.Rim ? HitSampleInfo.HIT_CLAP : HitSampleInfo.HIT_NORMAL);
+
+            if ((hitObject as TaikoStrongableHitObject)?.IsStrong == true || hitObject is StrongNestedHitObject)
+            {
+                PlaySamples(new ISampleInfo[]
+                {
+                    baseSample,
+                    hitObject.CreateHitSampleInfo(hitType == HitType.Rim ? HitSampleInfo.HIT_WHISTLE : HitSampleInfo.HIT_FINISH)
+                });
+            }
+            else
+            {
+                PlaySamples(new ISampleInfo[] { baseSample });
+            }
         }
 
         public override void Play() => throw new InvalidOperationException(@"Use override with HitType parameter instead");
